@@ -39,7 +39,9 @@ Use other column lengths and colours if you prefer, for example:
 
 # Usage
 
-After setup, the following commands will be automatically applied.
+After setup, the following commands will be automatically applied. Note
+that this command is used in toggle mode. This means that you can turn
+the highlighting on and off with the same command.
 
 ### Commands:
 

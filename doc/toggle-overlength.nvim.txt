@@ -51,7 +51,9 @@ Use other column lengths and colours if you prefer, for example:
 ==============================================================================
 3. Usage                                        *toggle-overlength.nvim-usage*
 
-After setup, the following commands will be automatically applied.
+After setup, the following commands will be automatically applied. Note that
+this command is used in toggle mode. This means that you can turn the
+highlighting on and off with the same command.
 
 
 COMMANDS: ~
