@@ -19,9 +19,6 @@ function M.setup(opts)
     vim.api.nvim_create_user_command("ToggleHiOverLength", function()
         M.toggle_hi_over_length()
     end, { nargs = 0 })
-
-    -- Set a key mapping to call the toggle function using <leader>th
-    vim.api.nvim_set_keymap("n", "<leader>th", ":ToggleHiOverLength<CR>", { noremap = true, silent = true })
 end
 
 -- Function to toggle the highlighting of text exceeding the column length
