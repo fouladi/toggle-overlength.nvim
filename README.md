@@ -3,6 +3,8 @@
 A Neovim plugin to toggle the highlithing of text exceeding the
 column length.
 
+![alt text](doc/images/toggle-overlength.png)
+
 # Installation
 
 Install the plugin with your package manager:
@@ -13,7 +15,7 @@ Here default configuration with a column length of `120`.
 
 ```lua
 {
-    "fouladi/ccrypt-wrapper.nvim",
+    "fouladi/toggle-overlength.nvim",
     config = function()
         require("toggle-overlength").setup({})
     end,
@@ -33,3 +35,17 @@ Use other column lengths and colours if you prefer, for example:
         })
     end,
 }
+```
+
+# Usage
+
+After setup, the following commands will be automatically applied.
+
+### Commands:
+
+Custom commands `:ToggleHiOverLength` to toggle the highlighting.
+
+### Key Mappings:
+
+Optional key mappings are provided to quickly toggle (`<leader>th`) the
+highlighted rows.
