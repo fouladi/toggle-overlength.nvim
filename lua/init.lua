@@ -10,6 +10,7 @@ M.config = {
 
 -- Setup function to allow users to override default settings
 function M.setup(opts)
+    opts = opts or {}
     M.config.column_length = opts.column_length or M.config.column_length
     M.config.ctermbg = opts.ctermbg or M.config.ctermbg
     M.config.guibg = opts.guibg or M.config.guibg
