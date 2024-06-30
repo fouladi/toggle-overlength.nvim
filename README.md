@@ -3,7 +3,7 @@
 A Neovim plugin to toggle the highlithing of text exceeding the
 column length.
 
-![alt text](doc/images/toggle-overlength.png)
+![alt text](doc/images/toggle-overlength.gif)
 
 # Installation
 
