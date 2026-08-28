@@ -1,44 +1,42 @@
--- Define the M table to hold all plugin functionality
 local M = {}
 
--- Default configuration settings for the plugin
-M.config = {
-    column_length = 120,  -- Default column length
-    ctermbg = "darkgrey", -- Default background color for terminal
-    guibg = "#592929",    -- Default background color for GUI
+local defaults = {
+    column_length = 120,
+    ctermbg = "darkgrey",
+    guibg = "#592929",
 }
 
--- Setup function to allow users to override default settings
-function M.setup(opts)
-    opts = opts or {}
-    M.config.column_length = opts.column_length or M.config.column_length
-    M.config.ctermbg = opts.ctermbg or M.config.ctermbg
-    M.config.guibg = opts.guibg or M.config.guibg
-end
+local config = {}
 
--- Function to toggle the highlighting of text exceeding the column length
-function M.toggle_hi_overlength()
-    if vim.b.overlengthhi == 1 then
-        -- If the highlight is already active, clear it and reset the color column
-        vim.cmd("highlight clear OverLength")
-        vim.opt.colorcolumn = "0"
-        vim.b.overlengthhi = 0
-    else
-        -- If the highlight is not active, set the highlight group and color column
-        vim.cmd(string.format("highlight OverLength ctermbg=%s guibg=%s", M.config.ctermbg, M.config.guibg))
-        vim.opt.colorcolumn = tostring(M.config.column_length)
-        vim.fn.matchadd("OverLength", string.format("\\%%%dv.\\+", M.config.column_length + 1))
-        vim.b.overlengthhi = 1
+--- Merge user options with defaults, create the user command, and optionally set a keymap.
+--- @param opts table|nil
+function M.setup(opts)
+    config = vim.tbl_deep_extend("force", defaults, opts or {})
+
+    vim.api.nvim_create_user_command("ToggleHiOverLength", M.toggle, { nargs = 0 })
+
+    if config.keymap then
+        vim.keymap.set("n", config.keymap, M.toggle, { noremap = true, silent = true })
     end
 end
 
--- Create a Vim command :ToggleHiOverLength to toggle the highlighting
-vim.api.nvim_create_user_command("ToggleHiOverLength", function()
-    M.toggle_hi_overlength()
-end, { nargs = 0 })
+--- Toggle the overlength highlighting for the current window/buffer.
+function M.toggle()
+    local match_id = vim.b.overlength_match_id
 
--- Set a key mapping to call the toggle function using <leader>th
-vim.api.nvim_set_keymap("n", "<leader>th", ":ToggleHiOverLength<CR>", { noremap = true, silent = true })
+    if match_id then
+        -- Turn off: remove match, clear highlight, reset colorcolumn
+        pcall(vim.fn.matchdelete, match_id)
+        vim.cmd("highlight clear OverLength")
+        vim.wo.colorcolumn = "0"
+        vim.b.overlength_match_id = nil
+    else
+        -- Turn on: define highlight, set colorcolumn, add match
+        vim.cmd(string.format("highlight OverLength ctermbg=%s guibg=%s", config.ctermbg, config.guibg))
+        vim.wo.colorcolumn = tostring(config.column_length)
+        local id = vim.fn.matchadd("OverLength", string.format("\\%%%dv.\\+", config.column_length + 1))
+        vim.b.overlength_match_id = id
+    end
+end
 
--- Return the M table to make the setup function accessible
 return M

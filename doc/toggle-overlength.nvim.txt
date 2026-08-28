@@ -11,7 +11,7 @@ Table of Contents                   *toggle-overlength.nvim-table-of-contents*
 ==============================================================================
 1. toggle-overlength.nvim      *toggle-overlength.nvim-toggle-overlength.nvim*
 
-A Neovim plugin to toggle the highlithing of text exceeding the column length.
+A Neovim plugin to toggle the highlighting of text exceeding the column length.
 
 
 ==============================================================================
@@ -32,16 +32,17 @@ Here default configuration with a column length of `120`.
     }
 <
 
-Use other column lengths and colours if you prefer, for example:
+Use other column lengths, colours, or a custom keymap if you prefer:
 
 >lua
     {
         "fouladi/toggle-overlength.nvim",
         config = function()
             require("toggle-overlength").setup({
-                column_length = 80, -- Set column length to 80
-                ctermbg = "red", -- Set terminal background color to red
-                guibg = "#ff0000", -- Set GUI background color to red
+                column_length = 80,      -- Set column length to 80
+                ctermbg = "red",         -- Set terminal background color to red
+                guibg = "#ff0000",       -- Set GUI background color to red
+                keymap = "<leader>th",   -- Optional: set a toggle keymap
             })
         end,
     }
@@ -51,20 +52,22 @@ Use other column lengths and colours if you prefer, for example:
 ==============================================================================
 3. Usage                                        *toggle-overlength.nvim-usage*
 
-After setup, the following commands will be automatically applied. Note that
-this command is used in toggle mode. This means that you can turn the
-highlighting on and off with the same command.
+After setup, the following command will be available. The command works in
+toggle mode: the same command turns highlighting on and off.
 
 
 COMMANDS: ~
 
-Custom commands `:ToggleHiOverLength` to toggle the highlighting.
+`:ToggleHiOverLength` — toggle the overlength highlighting.
 
 
 KEY MAPPINGS: ~
 
-Optional key mappings are provided to quickly toggle (`<leader>th`) the
-highlighted rows.
+No keymap is set by default. Pass `keymap` in the setup options to bind one:
+
+>lua
+    require("toggle-overlength").setup({ keymap = "<leader>th" })
+<
 
 ==============================================================================
 4. Links                                        *toggle-overlength.nvim-links*
